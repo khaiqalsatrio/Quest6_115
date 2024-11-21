@@ -3,6 +3,7 @@ package com.example.quest6_115.ui.view.screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.*
@@ -15,8 +16,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.quest6_115.Data.RuangKelas
 import com.example.quest6_115.R
 import com.example.quest6_115.model.Mahasiswa
+import kotlinx.coroutines.launch
 
 @Composable
 fun RencanaStudyView(
@@ -80,3 +83,102 @@ fun RencanaStudyView(
                     )
                 }
             }
+
+            Box(
+                modifier = Modifier
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(
+                            topEnd = 15.dp,
+                            topStart = 15.dp
+                        )
+                    )
+                    .fillMaxSize(),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                ) {
+                    Text(text = "Pilih Matakuliah Peminatan", fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "Silakan pilih matakuliah yang anda inginkan",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Light
+                    )
+                    Spacer(modifier = Modifier.padding(8.dp))
+
+                    DynamicSelectedTextField(
+                        selectedValue = chosenDropdown,
+                        options = MataKuliah.option,
+                        label = "Mata Kuliah",
+                        onValueChangeEvent = { chosenDropdown = it }
+                    )
+
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    HorizontalDivider()
+                    Spacer(modifier = Modifier.padding(8.dp))
+
+                    Text(text = "Pilih Kelas Belajar", fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "Silakan pilih kelas dari matakuliah yang anda inginkan",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Light
+                    )
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        RuangKelas.Kelas.forEach { data ->
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                RadioButton(
+                                    selected = pilihanKelas == data,
+                                    onClick = { pilihanKelas = data }
+                                )
+                                Text(data)
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    HorizontalDivider()
+                    Spacer(modifier = Modifier.padding(8.dp))
+
+                    Text(text = "Konsul persetujuan mahasiswa", fontWeight = FontWeight.Bold)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Checkbox(
+                            checked = checked,
+                            onCheckedChange = { checked = it },
+                            enabled = chosenDropdown.isNotBlank() && pilihanKelas.isNotBlank()
+                        )
+                        Text(
+                            text = "Saya Menyetujui Setiap Pernyataan Yang Ada Tanpa Ada Paksaan Dari Pihak Manapun",
+                            fontWeight = FontWeight.Light, fontSize = 10.sp
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.padding(8.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Button(onClick = { onBackButtonCliked() }) {
+                            Text(text = "Kembali")
+                        }
+
+                        Button(onClick = {
+                            coroutineScope.launch {
+                                snackbarHostState.showSnackbar("Data telah disimpan!")
+                            }
+                            onSubmitButtonCliked(listData)
+                        }) {
+                            Text(text = "Simpan")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
