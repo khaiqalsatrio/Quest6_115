@@ -5,6 +5,6 @@ object RuangKelas {
         "A",
         "B",
         "C",
-        "d",
+        "D",
     )
 }
