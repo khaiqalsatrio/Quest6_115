@@ -1,5 +1,3 @@
-package com.example.quest6_115.navigation
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -35,3 +33,68 @@ fun PengelolaanHalaman(
         )
     }
 
+    NavHost(
+        modifier = modifier.fillMaxSize(),
+        navController = navHost,
+        startDestination = Halaman.Splash.name
+    ) {
+        // Splash Screen
+        composable(route = Halaman.Splash.name) {
+            SplashView(onStartClick = {
+                navHost.navigate(Halaman.MahasiswaForm.name)
+            })
+        }
+
+        // Form Mahasiswa
+        composable(route = Halaman.MahasiswaForm.name) {
+            MahasiswaFormView(
+                onSubmitButtonCliked = { listData -> // Ejaan diperbaiki
+                    mahasiswa.value = Mahasiswa(
+                        Nama = listData[0],
+                        Nim = listData[1],
+                        Email = listData[2],
+                        Matakuliah = mahasiswa.value.Matakuliah,
+                        Kelas = mahasiswa.value.Kelas
+                    )
+                    navHost.navigate(Halaman.RencanaStudy.name)
+                },
+                onBackButtonCliked = { // Ejaan diperbaiki
+                    navHost.navigateUp()
+                }
+            )
+        }
+
+        // Rencana Study
+        composable(route = Halaman.RencanaStudy.name) {
+            RencanaStudyView(
+                mahasiswa = mahasiswa.value,
+                onSubmitButtonCliked = { listData -> // Ejaan diperbaiki
+                    mahasiswa.value = Mahasiswa(
+                        Nama = mahasiswa.value.Nama,
+                        Nim = mahasiswa.value.Nim,
+                        Email = mahasiswa.value.Email,
+                        Matakuliah = listData[0],
+                        Kelas = listData[1]
+                    )
+                    navHost.navigate(Halaman.Tampil.name)
+                },
+                onBackButtonCliked = { // Ejaan diperbaiki
+                    navHost.navigateUp()
+                }
+            )
+        }
+
+        // Tampilkan Data Mahasiswa
+        composable(route = Halaman.Tampil.name) {
+            TampilView(
+                uiState = mahasiswa.value,
+                onBackButtonClicked = {
+                    navHost.navigateUp()
+                },
+                onSubmitButtonClicked = {
+                    navHost.navigate(Halaman.Splash.name) // Atur sesuai kebutuhan
+                }
+            )
+        }
+    }
+}
