@@ -7,6 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.quest6_115.model.Mahasiswa
+import com.example.quest6_115.ui.view.screen.MahasiswaFormView
+import com.example.quest6_115.ui.view.screen.RencanaStudyView
+import com.example.quest6_115.ui.view.screen.SplashView
 
 enum class Halaman {
     MahasiswaForm,

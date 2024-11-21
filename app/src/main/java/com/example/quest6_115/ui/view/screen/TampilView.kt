@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.quest6_115.R
 import com.example.quest6_115.model.Mahasiswa
 
 @Composable
@@ -35,7 +36,7 @@ fun TampilView(
             modifier = Modifier.padding(horizontal = 16.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.umy2),
+                painter = painterResource(id = com.example.quest6_115.R.drawable.umy2),
                 contentDescription = "Logo Universitas",
                 modifier = Modifier.size(45.dp)
             )

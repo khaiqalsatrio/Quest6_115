@@ -16,6 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.project8.ui.widget.DynamicSelectedTextField
+import com.example.quest6_115.Data.Matakuliah
 import com.example.quest6_115.Data.RuangKelas
 import com.example.quest6_115.R
 import com.example.quest6_115.model.Mahasiswa
@@ -110,7 +112,7 @@ fun RencanaStudyView(
 
                     DynamicSelectedTextField(
                         selectedValue = chosenDropdown,
-                        options = MataKuliah.option,
+                        options = Matakuliah.option,
                         label = "Mata Kuliah",
                         onValueChangeEvent = { chosenDropdown = it }
                     )
